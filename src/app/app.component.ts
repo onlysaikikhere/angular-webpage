@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -10,24 +9,24 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   employeeForm!: FormGroup;
-  maxDate = new Date().toISOString().split('T')[0];
+  maxDate: string;
   genders = ['male', 'female', 'other'];
   departments = ['HR', 'Engineering', 'Marketing', 'Finance', 'Sales'];
+  pdfFile: File | null = null;
 
-  selectedFile: File | null = null;
-  fileUrl: SafeResourceUrl | null = null;
-  fileName: string = '';
-  isLoading: boolean = false;
-  errorMessage: string = '';
-
-  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer) {}
+  constructor(private fb: FormBuilder) {
+    // Calculate max date for date picker (18 years ago)
+    const today = new Date();
+    const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    this.maxDate = eighteenYearsAgo.toISOString().split('T')[0];
+  }
 
   ngOnInit(): void {
     this.employeeForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       dob: ['', Validators.required],
       number: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       altNumber: ['', Validators.pattern(/^\d{10}$/)],
@@ -36,64 +35,55 @@ export class App implements OnInit {
       remember: [false],
       experience: [0],
       favoriteColor: ['#000000'],
-      website: [''],
-      salary: [''],
+      website: ['', Validators.pattern(/https?:\/\/.+\..+/)],
+      salary: [0, Validators.min(0)],
       resume: [null],
-      bio: [''],
-      department: ['']
+      bio: ['', Validators.maxLength(500)],
+      department: ['', Validators.required]
     });
+  }
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      if (file && file.type === 'application/pdf') {
+        this.pdfFile = file;
+        this.employeeForm.patchValue({
+          resume: file.name
+        });
+      } else {
+        this.pdfFile = null;
+        this.employeeForm.patchValue({
+          resume: null
+        });
+        alert('Please upload a valid PDF file.');
+      }
+    }
+  }
+
+  openPdf(): void {
+    if (this.pdfFile) {
+      const fileURL = URL.createObjectURL(this.pdfFile);
+      window.open(fileURL, '_blank');
+    }
   }
 
   onSubmit(): void {
     if (this.employeeForm.valid) {
-      console.log(this.employeeForm.value);
+      console.log('Form submitted:', this.employeeForm.value);
+      // Here you would typically send the form data to your backend
+      // Note: For file uploads, you'll need to use FormData instead of JSON
     } else {
+      this.employeeForm.markAllAsTouched();
       alert('Please fill out all required fields correctly.');
     }
   }
 
-  onFileSelected(event: Event) {
-    this.isLoading = true;
-    this.errorMessage = '';
-    const input = event.target as HTMLInputElement;
-    
-    if (!input.files?.length) {
-      this.isLoading = false;
-      return;
-    }
-
-    const file = input.files[0];
-    
-    // Clear previous file URL if exists
-    if (this.fileUrl) {
-      URL.revokeObjectURL(this.fileUrl.toString());
-    }
-
-    // Reset file-related properties
-    this.selectedFile = null;
-    this.fileUrl = null;
-    this.fileName = '';
-
-    // Validate file type
-    if (file.type !== 'application/pdf') {
-      this.errorMessage = 'Please select a valid PDF file';
-      this.isLoading = false;
-      this.employeeForm.patchValue({ resume: null });
-      return;
-    }
-
-    this.selectedFile = file;
-    this.fileName = file.name;
-    const url = URL.createObjectURL(file);
-    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    this.employeeForm.patchValue({ resume: file });
-    this.isLoading = false;
-  }
-
-  ngOnDestroy() {
-    // Clean up object URLs
-    if (this.fileUrl) {
-      URL.revokeObjectURL(this.fileUrl.toString());
+  ngOnDestroy(): void {
+    // Clean up object URLs to prevent memory leaks
+    if (this.pdfFile) {
+      URL.revokeObjectURL(URL.createObjectURL(this.pdfFile));
     }
   }
 }
