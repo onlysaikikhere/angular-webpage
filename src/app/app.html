@@ -49,6 +49,45 @@
           <label class="form-check-label" for="remember">Remember me</label>
         </div>
 
+        <!-- Additional Input Fields -->
+        <div class="mb-3">
+          <label for="range">Experience (Years):</label>
+          <input type="range" class="form-range" formControlName="experience" id="range" min="0" max="30">
+        </div>
+
+        <div class="mb-3">
+          <label for="color">Favorite Color:</label>
+          <input type="color" class="form-control form-control-color" formControlName="favoriteColor" id="color">
+        </div>
+
+        <div class="mb-3">
+          <label for="website">Personal Website:</label>
+          <input type="url" class="form-control" formControlName="website" id="website">
+        </div>
+
+        <div class="mb-3">
+          <label for="salary">Expected Salary:</label>
+          <input type="number" class="form-control" formControlName="salary" id="salary" min="0">
+        </div>
+
+        <div class="mb-3">
+          <label for="resume">Upload Resume (PDF):</label>
+          <input type="file" class="form-control" formControlName="resume" id="resume" accept=".pdf">
+        </div>
+
+        <div class="mb-3">
+          <label for="bio">Short Bio:</label>
+          <textarea class="form-control" formControlName="bio" id="bio" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="department">Department:</label>
+          <select class="form-select" formControlName="department" id="department">
+            <option value="">Select</option>
+            <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+          </select>
+        </div>
+
         <button class="btn btn-primary w-100" type="submit">Submit</button>
       </form>
     </div>

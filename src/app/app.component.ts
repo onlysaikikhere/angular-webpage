@@ -13,7 +13,7 @@ export class App implements OnInit {
   employeeForm!: FormGroup;
   maxDate = new Date().toISOString().split('T')[0];
   genders = ['male', 'female', 'other'];
-
+  departments = ['HR', 'Engineering', 'Marketing', 'Finance', 'Sales'];
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -25,7 +25,14 @@ export class App implements OnInit {
       altNumber: ['', Validators.pattern(/^\d{10}$/)],
       address: ['', Validators.required],
       gender: ['', Validators.required],
-      remember: [false]
+      remember: [false] , 
+      experience: [0],
+      favoriteColor: ['#000000'],
+      website: [''],
+      salary: [''],
+      resume: [null],
+      bio: [''],
+      department: ['']
     });
   }
 
