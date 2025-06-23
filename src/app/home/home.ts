@@ -47,6 +47,15 @@ employeeForm!: FormGroup;
       bio: ['', Validators.maxLength(500)],
       department: ['', Validators.required]
     });
+
+    // Check if editing
+    const editData = localStorage.getItem('editData');
+    const editIndex = localStorage.getItem('editIndex');
+    if (editData && editIndex !== null) {
+      this.employeeForm.patchValue(JSON.parse(editData));
+      // Optionally, remove editData after loading
+      localStorage.removeItem('editData');
+    }
   }
 
   onFileChange(event: Event): void {
@@ -77,12 +86,17 @@ employeeForm!: FormGroup;
 
   onSubmit(): void {
     if (this.employeeForm.valid) {
-      this.list.push(this.employeeForm.value);
-      // Save the updated list to localStorage
+      const editIndex = localStorage.getItem('editIndex');
+      if (editIndex !== null) {
+        // Update existing entry
+        this.list[+editIndex] = this.employeeForm.value;
+        localStorage.removeItem('editIndex');
+      } else {
+        // Add new entry
+        this.list.push(this.employeeForm.value);
+      }
       localStorage.setItem('submittedData', JSON.stringify(this.list));
-      console.log('Form submitted successfully:', this.employeeForm.value);
       alert('Form submitted successfully!');
-      console.log('Submitted Data:', this.list);
       this.employeeForm.reset();
     } else {
       this.employeeForm.markAllAsTouched();
