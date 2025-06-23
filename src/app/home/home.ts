@@ -26,6 +26,10 @@ employeeForm!: FormGroup;
   }
 
   ngOnInit(): void {
+    // Restore previous submissions from localStorage
+    const stored = localStorage.getItem('submittedData');
+    this.list = stored ? JSON.parse(stored) : [];
+
     this.employeeForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -74,6 +78,8 @@ employeeForm!: FormGroup;
   onSubmit(): void {
     if (this.employeeForm.valid) {
       this.list.push(this.employeeForm.value);
+      // Save the updated list to localStorage
+      localStorage.setItem('submittedData', JSON.stringify(this.list));
       console.log('Form submitted successfully:', this.employeeForm.value);
       alert('Form submitted successfully!');
       console.log('Submitted Data:', this.list);
@@ -95,5 +101,24 @@ employeeForm!: FormGroup;
       URL.revokeObjectURL(URL.createObjectURL(this.pdfFile));
     }
     
+  }
+  fillDummyData(): void {
+    this.employeeForm.patchValue({
+      email: 'john.doe@example.com',
+      password: 'Password123!',
+      dob: '1990-01-01',
+      number: '9876543210',
+      altNumber: '9123456789',
+      address: '123 Main St, City',
+      gender: 'male',
+      remember: true,
+      experience: 5,
+      favoriteColor: '#3498db',
+      website: 'https://example.com',
+      salary: 50000,
+      resume: 'dummy_resume.pdf',
+      bio: 'This is a sample bio.',
+      department: 'Engineering'
+    });
   }
 }

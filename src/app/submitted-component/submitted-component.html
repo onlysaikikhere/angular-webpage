@@ -2,8 +2,49 @@
   <div class="card shadow-lg rounded-4">
     <div class="card-body">
       <h2 class="card-title text-center mb-4">Submitted Details</h2>
-      <div *ngIf="data; else noData">
-        <pre>{{ data | json }}</pre>
+      <div *ngIf="data && data.length > 0; else noData">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Number</th>
+                <th>Alt Number</th>
+                <th>Address</th>
+                <th>Gender</th>
+                <th>Experience</th>
+                <th>Favorite Color</th>
+                <th>Website</th>
+                <th>Salary</th>
+                <th>Resume</th>
+                <th>Bio</th>
+                <th>Department</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of data">
+                <td>{{ emp.email }}</td>
+                <td>{{ emp.dob }}</td>
+                <td>{{ emp.number }}</td>
+                <td>{{ emp.altNumber }}</td>
+                <td>{{ emp.address }}</td>
+                <td>{{ emp.gender }}</td>
+                <td>{{ emp.experience }}</td>
+                <td>
+                  <span [style.background]="emp.favoriteColor" class="px-2 py-1 rounded text-white">
+                    {{ emp.favoriteColor }}
+                  </span>
+                </td>
+                <td>{{ emp.website }}</td>
+                <td>{{ emp.salary }}</td>
+                <td>{{ emp.resume }}</td>
+                <td>{{ emp.bio }}</td>
+                <td>{{ emp.department }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <ng-template #noData>
         <p>No data submitted yet.</p>
