@@ -1,0 +1,13 @@
+<div class="container mt-5">
+  <div class="card shadow-lg rounded-4">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">Submitted Details</h2>
+      <div *ngIf="data; else noData">
+        <pre>{{ data | json }}</pre>
+      </div>
+      <ng-template #noData>
+        <p>No data submitted yet.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
