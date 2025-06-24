@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-submitted-details',
   standalone: true,
-  imports: [CommonModule , FormsModule],
+  imports: [CommonModule , FormsModule , RouterModule],
   templateUrl: './submitted-component.html'
 })
 export class SubmittedDetailsComponent implements OnInit {

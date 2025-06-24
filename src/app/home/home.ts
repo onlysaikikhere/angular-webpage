@@ -27,7 +27,10 @@ employeeForm!: FormGroup;
 
   ngOnInit(): void {
     // Restore previous submissions from localStorage
-    const stored = localStorage.getItem('submittedData');
+    let stored: string | null = null;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      stored = localStorage.getItem('submittedData');
+    }
     this.list = stored ? JSON.parse(stored) : [];
 
     this.employeeForm = this.fb.group({
