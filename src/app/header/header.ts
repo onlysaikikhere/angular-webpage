@@ -16,4 +16,6 @@ export class Header {
     { title: 'Add Employee', route: '/add-employee', icon: 'fas fa-user-plus' },
     { title: 'View Employees', route: '/view-employee', icon: 'fas fa-users' }
   ];
+  
+  resumeLink = 'https://onlysaikikhere.github.io/';
 }
