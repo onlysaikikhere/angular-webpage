@@ -2,6 +2,9 @@
   <div class="card shadow-lg rounded-4">
     <div class="card-body">
       <h2 class="card-title text-center mb-4">Submitted Details</h2>
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchText">
+      </div>
       <div *ngIf="data && data.length > 0; else noData">
         <div class="table-responsive">
           <table class="table table-striped table-bordered">
@@ -20,7 +23,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let emp of data; let i = index">
+              <tr *ngFor="let emp of filteredData; let i = index">
                 <td>{{ emp.email }}</td>
                 <td>{{ emp.dob }}</td>
                 <td>{{ emp.number }}</td>

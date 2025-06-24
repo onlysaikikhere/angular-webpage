@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-submitted-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule , FormsModule],
   templateUrl: './submitted-component.html'
 })
 export class SubmittedDetailsComponent implements OnInit {
   data: any[] = [];
+  searchText: string = '';
 
   ngOnInit() {
     this.loadData();
@@ -35,5 +37,15 @@ export class SubmittedDetailsComponent implements OnInit {
     localStorage.setItem('editIndex', index.toString());
     localStorage.setItem('editData', JSON.stringify(this.data[index]));
     window.location.href = '/';
+  }
+
+  get filteredData() {
+    if (!this.searchText) return this.data;
+    const search = this.searchText.toLowerCase();
+    return this.data.filter(emp =>
+      Object.values(emp).some(val =>
+        String(val).toLowerCase().includes(search)
+      )
+    );
   }
 }
