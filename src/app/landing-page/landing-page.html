@@ -1,0 +1,71 @@
+<!-- Hero Section with Bootstrap -->
+<div class="hero-section d-flex align-items-center">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-8">
+        <h1 class="display-4 fw-bold mb-4">{{ title }}</h1>
+        <p class="lead mb-5">{{ subtitle }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Action Buttons Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row justify-content-center g-4">
+      <!-- Add Employee Card -->
+      <div class="col-lg-5 col-md-6">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <span class="display-1">👤</span>
+            </div>
+            <h3 class="card-title mb-3">Add Employee</h3>
+            <p class="card-text text-muted mb-4">Create new employee records with comprehensive details including personal information, salary, and department.</p>
+            <button class="btn btn-primary btn-lg" routerLink="/add-employee">
+              Add Employee
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- View Employees Card -->
+      <div class="col-lg-5 col-md-6">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <span class="display-1">📋</span>
+            </div>
+            <h3 class="card-title mb-3">View Employees</h3>
+            <p class="card-text text-muted mb-4">Browse, search, and manage your complete employee database with filtering and editing capabilities.</p>
+            <button class="btn btn-success btn-lg" routerLink="/view-employee">
+              View Employees
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-12 mb-5">
+        <h2 class="display-5 fw-bold">Key Features</h2>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let feature of features">
+        <div class="text-center">
+          <div class="mb-3">
+            <span class="display-4">{{ feature.icon }}</span>
+          </div>
+          <h4 class="fw-bold">{{ feature.title }}</h4>
+          <p class="text-muted">{{ feature.description }}</p>
+        </div>      </div>
+    </div>
+  </div>
+</section>
