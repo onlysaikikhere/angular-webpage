@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 export class SubmittedDetailsComponent implements OnInit {
   data: any[] = [];
   searchText: string = '';
+  selectedEmployee: any = null;
 
   ngOnInit() {
     this.loadData();
@@ -37,6 +38,15 @@ export class SubmittedDetailsComponent implements OnInit {
     localStorage.setItem('editIndex', index.toString());
     localStorage.setItem('editData', JSON.stringify(this.data[index]));
     window.location.href = '/';
+  }
+
+  openDialog(emp: any) {
+    this.selectedEmployee = emp;
+    // Show Bootstrap modal
+    setTimeout(() => {
+      const modal = new (window as any).bootstrap.Modal(document.getElementById('employeeModal'));
+      modal.show();
+    });
   }
 
   get filteredData() {

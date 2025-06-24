@@ -27,7 +27,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let emp of filteredData; let i = index">
+              <tr *ngFor="let emp of filteredData; let i = index" (click)="openDialog(emp)" style="cursor:pointer;" >
                 <td>{{ emp.email }}</td>
                 <td>{{ emp.dob }}</td>
                 <td>{{ emp.number }}</td>
@@ -49,6 +49,31 @@
       <ng-template #noData>
         <p>No data submitted yet.</p>
       </ng-template>
+    </div>
+  </div>
+</div>
+
+<!-- Employee Details Modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="employeeModalLabel">Employee Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedEmployee">
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Email:</strong> {{ selectedEmployee.email }}</li>
+          <li class="list-group-item"><strong>DOB:</strong> {{ selectedEmployee.dob }}</li>
+          <li class="list-group-item"><strong>Number:</strong> {{ selectedEmployee.number }}</li>
+          <li class="list-group-item"><strong>Alt Number:</strong> {{ selectedEmployee.altNumber }}</li>
+          <li class="list-group-item"><strong>Address:</strong> {{ selectedEmployee.address }}</li>
+          <li class="list-group-item"><strong>Gender:</strong> {{ selectedEmployee.gender }}</li>
+          <li class="list-group-item"><strong>Experience:</strong> {{ selectedEmployee.experience }}</li>
+          <li class="list-group-item"><strong>Salary:</strong> {{ selectedEmployee.salary }}</li>
+          <li class="list-group-item"><strong>Department:</strong> {{ selectedEmployee.department }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
