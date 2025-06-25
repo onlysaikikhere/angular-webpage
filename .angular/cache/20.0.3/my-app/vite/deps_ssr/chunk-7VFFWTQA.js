@@ -4,14 +4,14 @@ import {
   ROUTES,
   Router,
   loadChildren
-} from "./chunk-JAZCK3HV.js";
+} from "./chunk-AR77CJ7P.js";
 import {
   BrowserDomAdapter,
   BrowserModule,
   EVENT_MANAGER_PLUGINS,
   EventManagerPlugin,
   HTTP_ROOT_INTERCEPTOR_FNS
-} from "./chunk-ZNVBAPZT.js";
+} from "./chunk-JM5VJ7MN.js";
 import {
   APP_BASE_HREF,
   NullViewportScroller,
@@ -21,7 +21,7 @@ import {
   XhrFactory,
   getDOM,
   setRootDomAdapter
-} from "./chunk-3NYYLIOE.js";
+} from "./chunk-3O7EB444.js";
 import {
   ALLOW_MULTIPLE_PLATFORMS,
   APP_ID,
@@ -67,7 +67,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-PIFGIU2S.js";
+} from "./chunk-IQJFRGNT.js";
 import {
   __objRest,
   __spreadProps,
@@ -16272,7 +16272,7 @@ var ServerXhr = class _ServerXhr {
     if (!this.xhrImpl) {
       const {
         default: xhr
-      } = await import("./xhr2-V6PWYMAO.js");
+      } = await import("./xhr2-E5RTESSH.js");
       this.xhrImpl = xhr;
     }
   }
@@ -28131,4 +28131,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-MNC5IKGQ.js.map
+//# sourceMappingURL=chunk-7VFFWTQA.js.map

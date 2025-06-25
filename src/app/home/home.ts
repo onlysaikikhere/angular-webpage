@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule,FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router  } from '@angular/router';
+import { Router , RouterModule  } from '@angular/router';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { Router  } from '@angular/router';
   templateUrl: './home.html',
   styleUrl: './home.css',
   standalone: true, 
-  imports: [CommonModule, ReactiveFormsModule , FormsModule ], 
+  imports: [CommonModule, ReactiveFormsModule , FormsModule , RouterModule ], 
 })
 export class Home implements OnInit, OnDestroy {
 list: any[] = [] ; 
@@ -108,12 +108,11 @@ employeeForm!: FormGroup;
   }
   viewall():void{
      if (typeof window !== 'undefined' && window.localStorage) {
-        localStorage.setItem('submittedData', JSON.stringify(this.list));
-      }
-    this.router.navigate(['/submitted']);
-  }
+      localStorage.setItem('submittedData', JSON.stringify(this.list));
+    }
+  this.router.navigate(['/view-employee']); 
+}
   ngOnDestroy(): void {
-    // Clean up object URLs to prevent memory leaks
     if (this.pdfFile) {
       URL.revokeObjectURL(URL.createObjectURL(this.pdfFile));
     }
